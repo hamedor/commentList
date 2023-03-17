@@ -287,7 +287,7 @@ const sendComments = () => {
       let picker = datepicker[i] as HTMLInputElement;
 
       let currentDate = new Date().toISOString().split("T")[0];
-      console.log(currentDate)
+
 
       picker.max = currentDate;
 
@@ -461,6 +461,7 @@ const sendComments = () => {
   };
 
   const deleteComment = (id: number, level: String) => {
+
     const data: RootObject = fromLocalStorage();
 
     if (level === "outer") {
@@ -469,6 +470,7 @@ const sendComments = () => {
       });
       renderComments(fromLocalStorage());
     } else {
+      
       const filtered = data.comments.map((e) => {
         return e.commentsArray.filter((e) => e.id !== id);
       });
