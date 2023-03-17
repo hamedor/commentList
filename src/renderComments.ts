@@ -117,7 +117,7 @@ const renderComments = (data: RootObject) => {
                     </div>
                     </div>
                         <button class="openForm">Ответить</button>
-                        <button key="innerr" class="deleteButton"><img src=${deleteIcon} width="20" height="20"></button>
+                        <button key="inner" class="deleteButton"><img src=${deleteIcon} width="20" height="20"></button>
                     <form class="formAnswer">
                     <div class="fields">
                         <input id="name" class="nameinput" type="text">
