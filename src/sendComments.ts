@@ -287,6 +287,7 @@ const sendComments = () => {
       let picker = datepicker[i] as HTMLInputElement;
 
       let currentDate = new Date().toISOString().split("T")[0];
+      console.log(currentDate)
 
       picker.max = currentDate;
 
@@ -299,6 +300,7 @@ const sendComments = () => {
 
       datepicker[i].addEventListener("change", (e) => {
         const target = (e.target as HTMLInputElement).value;
+        
         if (target) {
           dateArray[i] = getDate(target, picker, dateValidationArray[i], true);
         }
