@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "name": "person",
+      "text": "первый",
+      "date": "13.03.2023",
+      "time": "19:08:56",
+      "id": 1,
+      "likes": 2,
+      "currentUserLiked": false,
+      "commentsArray": [
+        {
+          "name": "person2",
+          "text": "второй",
+          "date": "14.03.2023",
+          "time": "13:08:56",
+          "id": 2,
+          "answeredComment": 1,
+          "likes": 0,
+          "currentUserLiked": false
+        },
+        {
+          "name": "admin",
+          "text": "забаню",
+          "date": "14.03.2023",
+          "time": "14:08:56",
+          "id": 3,
+          "answeredComment": 1,
+          "likes": 12,
+          "currentUserLiked": false
+        },
+        {
+          "name": "someuser23141",
+          "text": "lorem lllll asda ddddd",
+          "date": "14.03.2023",
+          "time": "15:18:56",
+          "id": 4,
+          "answeredComment": 1,
+          "likes": 2,
+          "currentUserLiked": false
+        },
+        {
+          "name": "person1",
+          "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel massa placerat, maximus ex venenatis, fringilla tortor. Sed malesuada ut augue eget dictum.",
+          "date": "14.03.2023",
+          "time": "19:08:56",
+          "id": 5,
+          "answeredComment": 4,
+          "likes": 2,
+          "currentUserLiked": false
+        },
+        {
+          "name": "someuser2312341",
+          "text": "А что это за язык такой?",
+          "date": "14.03.2023",
+          "time": "19:58:56",
+          "id": 6,
+          "answeredComment": 5,
+          "likes": 2,
+          "currentUserLiked": false
+        }
+      ]
+    },
+    {
+      "name": "person2",
+      "text": "Вторая ветка",
+      "date": "13.03.2023",
+      "time": "23:08:56",
+      "id": 7,
+      "likes": 2,
+      "currentUserLiked": false,
+      "commentsArray": [
+        {
+          "name": "person131",
+          "text": "круто",
+          "date": "01.12.2020",
+          "time": "19:08:56",
+          "id": 8,
+          "answeredComment": 7,
+          "likes": 0,
+          "currentUserLiked": false
+        }
+      ]
+    }
+  ]
+}

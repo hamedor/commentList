@@ -1,0 +1,178 @@
+body {
+  background-color: gray;
+}
+.comments {
+  width: 40rem;
+  padding: 4rem;
+  margin: 0 auto;
+  background-color: #fff;
+}
+button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.item2 {
+  margin-left: 2rem;
+}
+.answered {
+  /*  background-color: rgb(204, 204, 204); */
+  margin-left: 1rem;
+  font-size: 0.8rem;
+}
+.answered .text {
+  margin: 0;
+}
+.text-inner {
+  margin-top: 0.5rem;
+}
+.flex {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.flex--small {
+  display: flex;
+  align-items: center;
+}
+.opened {
+  display: block;
+}
+.textarea {
+  resize: none;
+  width: 99.35%;
+  height: 4rem;
+  border: 1px solid gray;
+}
+.form {
+  height: 10rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.formAnswer {
+  height: 10rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  height: 6rem;
+  border: 1px solid gray;
+  width: 100%;
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-top: none;
+  background-color: #f9f9f7;
+
+  transform: translateY(-1.1px);
+  z-index: -1;
+}
+.answerComment {
+  margin-left: auto;
+  width: 10rem;
+  height: 2rem;
+  position: absolute;
+  right: 1rem;
+  bottom: 0.3rem;
+  border-radius: 10rem;
+  cursor: pointer;
+
+  color: #fff;
+  background-color: rgb(122, 113, 113);
+  z-index: 2;
+}
+.formAnswer {
+  display: none;
+  margin-bottom: 3rem;
+}
+.opened > .formAnswer {
+  display: block;
+}
+.errors {
+  display: flex;
+  flex-direction: column;
+}
+.invalidText {
+  order: 1;
+}
+.invalidName {
+  order: 2;
+}
+
+.red {
+  fill: red;
+}
+.invalid {
+  margin: 0 0 0 1rem;
+}
+.fields {
+  margin-top: 1rem;
+}
+.fieldsFlex {
+  display: flex;
+  width: 20rem;
+  margin: 0 auto;
+}
+.list {
+  margin-top: 4rem;
+}
+.name,
+.date {
+  margin: 0;
+}
+
+.item2 {
+  margin-top: 1rem;
+}
+.name {
+  font-weight: 700;
+}
+.commentTree {
+  margin: 1rem 0;
+}
+.openForm {
+  width: 6rem;
+  height: 2rem;
+  background-color: rgb(187, 180, 180);
+  border-radius: 2rem;
+
+  cursor: pointer;
+}
+.answeredFlex {
+  display: flex;
+  height: 2.7rem;
+  align-items: center;
+}
+hr {
+}
+hr {
+  border: none;
+  margin: 0;
+  width: 1px;
+  height: 2rem;
+  color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.hr-horizontal {
+  width: 100%;
+  height: 1px;
+  color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.hrFlex {
+  display: flex;
+
+  height: 100%;
+}
+.hr-vertical {
+  height: 100%;
+  width: 1px;
+}
+.date {
+  font-size: 0.8rem;
+}
+.datepicker {
+  transform: translateY(-1px);
+}
