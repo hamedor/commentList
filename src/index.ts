@@ -1,20 +1,25 @@
 import RootObject from "./interfaces/Comment";
 import styles from "./styles.module.css";
 import data from "./data.json";
-import sendComments from "./sendComments";
 import renderComments from "./renderComments";
 import "./styles.css";
+import { events } from "./events";
 
-export const toLocalStorage = (data: RootObject) => {
-  localStorage.setItem("data", JSON.stringify(data));
+
+
+export const toLocalStorage = (key:string ,data: any) => {
+  localStorage.setItem(key, JSON.stringify(data));
 };
 
-export const fromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem("data"));
+export const fromLocalStorage = (key:string) => {
+  return JSON.parse(localStorage.getItem(key));
 };
 
-toLocalStorage(data);
-const storedData: RootObject = fromLocalStorage();
+
+
+toLocalStorage('data' ,data);
+const storedData: RootObject = fromLocalStorage('data');
 
 renderComments(storedData);
-sendComments();
+
+events();

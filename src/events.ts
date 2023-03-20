@@ -2,8 +2,14 @@ import RootObject from "./interfaces/Comment";
 import renderComments from "./renderComments";
 import { toLocalStorage, fromLocalStorage } from "./index";
 
+import likeComment from "./likeComment";
+import deleteComment from "./deleteComment";
+import sendComment from "./sendComment";
+import { removeErrors, validate } from "./validate";
+import getDate from "./getDate";
 
-const sendComments = () => {
+export const events = () => {
+
   const errors = {
     text: {
       min: "<p class='invalidText invalid'>в поле текст должно быть не меньше 3 символов</p>",
@@ -16,18 +22,19 @@ const sendComments = () => {
       empty: "<p class='invalidName invalid'>поле имя не заполнено</p>",
     },
     date: {
-      max: "<p class='invalidDate invalid'>год не может быть больше текущего</p>",
+      max: "<p class='invalidDate invalid'>дата не может быть больше текущей</p>",
     },
   };
+  
 
   const likeButtons = document.querySelectorAll(".likeButton") as NodeList;
   let likedArray = new Array(likeButtons.length);
-
+  
   let textValidationArray = new Array(likeButtons.length);
   let nameValidationArray = new Array(likeButtons.length);
   let dateValidationArray = new Array(likeButtons.length);
 
-  const events = () => {
+
     const openFormButtons = document.querySelectorAll(".openForm") as NodeList;
     const answerCommentButtons = document.querySelectorAll(
       ".answerComment"
@@ -35,7 +42,7 @@ const sendComments = () => {
     const deleteButtons = document.querySelectorAll(
       ".deleteButton"
     ) as NodeList;
-    const likeButtons = document.querySelectorAll(".likeButton") as NodeList;
+   
 
     const textarea = document.querySelectorAll(".textarea") as NodeList;
     const datepicker = document.querySelectorAll(".datepicker") as NodeList;
@@ -52,124 +59,8 @@ const sendComments = () => {
       });
     }
 
-    const removeErrors = (
-      element: HTMLElement,
-      validationStatus: boolean,
-      toRemove: any
-    ) => {
-      let errors = element.parentElement.nextElementSibling.children;
 
-      for (let err of errors) {
-        let child = err.querySelector(`:scope > ${toRemove}`);
 
-        if (child) {
-          child.remove();
-        }
-        element.style.border = "1px solid black";
-      }
-      return (validationStatus = false);
-    };
-
-    const validate = (
-      element: HTMLElement,
-      text: string,
-      validationStatus: boolean,
-      err: any,
-      allowedMin: number,
-      allowedMax: number,
-      whatIsChecked: string
-    ) => {
-      const makeBorderRed = () => {
-        let el = element.parentElement.children;
-
-        for (let item of el) {
-          let a = item as HTMLElement;
-          if (a.className === whatIsChecked) {
-            a.style.border = "1px solid red";
-          }
-        }
-      };
-
-      if (whatIsChecked === "datepicker") {
-        if (+text > allowedMax) {
-          element.parentElement.nextElementSibling.firstElementChild.insertAdjacentHTML(
-            "afterbegin",
-            err.max
-          );
-
-          validationStatus = true;
-          makeBorderRed();
-          return validationStatus;
-        }
-      }
-
-      if (!text) {
-        element.parentElement.nextElementSibling.firstElementChild.insertAdjacentHTML(
-          "afterbegin",
-          err.empty
-        );
-
-        validationStatus = true;
-        makeBorderRed();
-        return validationStatus;
-      }
-
-      if (!text || text.length < allowedMin) {
-        element.parentElement.nextElementSibling.firstElementChild.insertAdjacentHTML(
-          "afterbegin",
-          err.min
-        );
-
-        validationStatus = true;
-        makeBorderRed();
-        return validationStatus;
-      }
-
-      if (text.length > allowedMax) {
-        element.parentElement.nextElementSibling.firstElementChild.insertAdjacentHTML(
-          "afterbegin",
-          err.max
-        );
-
-        validationStatus = true;
-        makeBorderRed();
-        return validationStatus;
-      }
-    };
-
-    const getDate = (
-      date: string,
-      picker: HTMLInputElement,
-      dateValidationArray: boolean,
-      shuoldValidate: boolean
-    ) => {
-      const array = date.split("-");
-      const day: string = array[2];
-
-      const month: string = array[1];
-      const year: string = array[0];
-
-      const result = day + "." + month + "." + year;
-
-      if (shuoldValidate) {
-        dateValidationArray = removeErrors(
-          picker,
-          dateValidationArray,
-          ".invalidDate"
-        );
-        dateValidationArray = validate(
-          picker,
-          year,
-          dateValidationArray,
-          errors.date,
-          3,
-          +picker.max.split("-")[0],
-          "datepicker"
-        );
-      }
-
-      return result;
-    };
 
     for (let i = 0; i < textarea.length; i++) {
       let input = textarea[i] as HTMLElement;
@@ -292,6 +183,7 @@ const sendComments = () => {
       picker.max = currentDate;
 
       dateArray[i] = getDate(
+        errors,
         currentDate,
         picker,
         dateValidationArray[i],
@@ -302,7 +194,7 @@ const sendComments = () => {
         const target = (e.target as HTMLInputElement).value;
         
         if (target) {
-          dateArray[i] = getDate(target, picker, dateValidationArray[i], true);
+          dateArray[i] = getDate(errors, target, picker, dateValidationArray[i], true);
         }
       });
     }
@@ -413,172 +305,4 @@ const sendComments = () => {
         });
       }
     }
-  };
-
-  const likeComment = (id: number, level: String) => {
-    const data: RootObject = fromLocalStorage();
-
-    if (level === "outer") {
-      data.comments
-        .filter((e) => e.id === id)
-        .map((el) => {
-
-          if (el.currentUserLiked) {
-            el.likes -= 1;
-
-            el.currentUserLiked = false;
-            toLocalStorage(data);
-            renderComments(fromLocalStorage());
-          } else {
-            el.likes += 1;
-            el.currentUserLiked = true;
-            toLocalStorage(data);
-            renderComments(fromLocalStorage());
-          }
-        });
-    } else {
-      data.comments.flatMap((e) => {
-        e.commentsArray
-          .filter((e) => e.id === id)
-          .map((el) => {
-            if (el.currentUserLiked) {
-              el.currentUserLiked = false;
-              el.likes -= 1;
-
-              toLocalStorage(data);
-              renderComments(fromLocalStorage());
-            } else {
-              el.currentUserLiked = true;
-              el.likes += 1;
-
-              toLocalStorage(data);
-              renderComments(fromLocalStorage());
-            }
-          });
-      });
-    }
-    events();
-  };
-
-  const deleteComment = (id: number, level: String) => {
-
-    const data: RootObject = fromLocalStorage();
-
-    if (level === "outer") {
-      toLocalStorage({
-        comments: [...data.comments.filter((e) => e.id !== id)],
-      });
-      renderComments(fromLocalStorage());
-    } else {
-      
-      const filtered = data.comments.map((e) => {
-        return e.commentsArray.filter((e) => e.id !== id);
-      });
-
-      for (let i = 0; i < data.comments.length; i++) {
-        let firstarr = filtered[i];
-        data.comments[i].commentsArray = [...firstarr];
-      }
-      toLocalStorage(data);
-      renderComments(fromLocalStorage());
-    }
-    events();
-  };
-
-  const sendComment = (
-    text: string,
-    name: string,
-    date: string,
-    time: string,
-    parentId: number
-  ) => {
-    const data: RootObject = fromLocalStorage();
-
-
-    const searchMaxId = (data: RootObject) => {
-      const outerId = data.comments.map((e) => e.id);
-      const innerId = data.comments.flatMap((e) =>
-        e.commentsArray.map((el) => el.id)
-      );
-
-      const outer = outerId[outerId.length - 1];
-      const inner = innerId[innerId.length - 1];
-
-      if (outer && inner) {
-        return Math.max(outer, inner);
-      }
-      if (!outer && !inner) {
-        return 0;
-      }
-      if (!outer && inner) {
-        return inner;
-      }
-      if (!inner && outer) {
-        return outer;
-      }
-
-      const result = Math.max(
-        outerId[outerId.length - 1],
-        innerId[innerId.length - 1] || 0
-      );
-
-      return result;
-    };
-
-    let id = searchMaxId(data) + 1;
- 
-
-    if (parentId) {
-      data.comments.map((el) => {
-        if (parentId === el.id) {
-          el.commentsArray.push({
-            name,
-            text,
-            date,
-            time,
-            id,
-            likes: 0,
-            currentUserLiked: false,
-            answeredComment: parentId,
-          });
-        } else {
-          el.commentsArray.map((e) => {
-            if (parentId === e.id) {
-              el.commentsArray.push({
-                name,
-                text,
-                date,
-                time,
-                id,
-                likes: 0,
-                currentUserLiked: false,
-                answeredComment: parentId,
-              });
-            }
-          });
-        }
-      });
-    } else {
-      data.comments.push({
-        name,
-        text,
-        date,
-        time,
-        id,
-        likes: 0,
-        currentUserLiked: false,
-        commentsArray: [],
-      });
-    }
-
-
-    toLocalStorage(data);
-    renderComments(fromLocalStorage());
-
-    events();
-  };
-
-  events();
 };
-
-export default sendComments;
